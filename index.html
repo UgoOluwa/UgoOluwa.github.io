@@ -323,18 +323,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="clearfix"></div>
 				</div>
 				<div class="contact-form">
-					<div class="text">
-						<input type="text" value="Your Name.." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Name..';}"/>
-					</div>
-					<div class="text">
-						<input type="text" value="Your Email.." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your Email..';}"/>
-					</div>
-					<div class="text">
-						<textarea value="Message:" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Message';}">Your Message..</textarea>
-					</div>
-					<div class="text">
-						<input type="submit"/>
-					</div>
+					<form onsubmit="SendMail()">
+						<div class="text">
+							<input id="name" required type="text" placeholder="Your Name..." value="" onfocus="this.placeholder = '';" onblur="if (this.value == '') {this.placeholder = 'Your Name..';}"/>
+						</div>
+						<div class="text">
+							<input id="email" required type="text" placeholder="Your Email.." value="" onfocus="this.placeholder = '';" onblur="if (this.value == '') {this.placeholder = 'Your Email..';}"/>
+						</div>
+						<div class="text">
+							<textarea id="message" required placeholder="Your Message..." value="" onfocus="this.placeholder = '';" onblur="if (this.value == '') {this.placeholder = 'Your Message...';}"></textarea>
+						</div>
+						<div class="text">
+							<input onclick="SendMail()" type="submit"/>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -348,6 +350,46 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</div> -->
 	<!--- Footer Ends Here -- -->
 </body>
+
+<script>
+  function SendMail() {
+    var a = document.getElementById('name').value;
+    var b = document.getElementById('email').value;
+	var c = document.getElementById('message').value;
+
+	if(!a || !b || !c){
+		alert("Please fill the form correctly!!");
+		return
+	}
+	alert("Testing...")
+	var nodemailer = require('nodemailer');
+
+	var transporter = nodemailer.createTransport({
+		service: 'gmail',
+		auth: {
+			user: 'zornaquad@gmail.com',
+			pass: 'father+1'
+		}
+	});
+
+	var mailOptions = {
+		from: 'zornaquad@gmail.com',
+		to: 'ugoluwa@gmail.com',
+		subject: 'Enquiry',
+		text: "Hello!"
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+		if (error) {
+			console.log(error);
+		} else {
+			console.log('Email sent: ' + info.response);
+		}
+	});
+
+	
+  }
+</script>
 </html>
 
 
